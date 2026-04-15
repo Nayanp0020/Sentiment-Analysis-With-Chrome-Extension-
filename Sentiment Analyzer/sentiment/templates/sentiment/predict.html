@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sentiment Analyzer 💬</title>
+  <style>
+    /* 🌈 Background and layout */
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #c2e9fb, #a1c4fd);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    /* 🧊 Glassmorphism Card */
+    .container {
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 50px;
+      width: 900px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 26px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #555;
+      font-size: 15px;
+    }
+
+    form input[type="text"] {
+      width: 90%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-top: 20px;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    form input[type="text"]:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px #007bff88;
+    }
+
+    button {
+      margin-top: 20px;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(37,117,252,0.6);
+    }
+
+    /* 🎯 Result display */
+    .result-box {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: 600;
+      animation: popIn 0.6s ease-in-out;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* 🎉 Floating emojis animation */
+    .emoji {
+      position: fixed;
+      bottom: 0;
+      font-size: 2.5rem;
+      opacity: 0.9;
+      animation: floatUp 3.5s linear forwards;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-650px) scale(1.8);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Sentiment Analyzer</h1>
+    <p>Enter your comment 💬</p>
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Analyze</button>
+    </form>
+
+    {% if result %}
+    <div class="result-box">
+      {% if result == "Positive" %}
+        🌟 <span style="color:green;">Positive Sentiment Found</span> 😊
+      {% else %}
+        😞 <span style="color:red;">Negative Sentiment Found</span> 😒
+      {% endif %}
+    </div>
+
+    <script>
+      const sentiment = "{{ result }}";
+      let emojis = [];
+
+      if (sentiment === "Positive") {
+        emojis = ["😊", "🎉", "✨", "❤️", "🥳", "🌈"];
+      } else if (sentiment === "Negative") {
+        emojis = ["😡", "💢", "💔", "😞", "😠", "😢"];
+      }
+
+      for (let i = 0; i < 25; i++) {
+        const emoji = document.createElement('div');
+        emoji.classList.add('emoji');
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * window.innerWidth + 'px';
+        emoji.style.animationDuration = (2 + Math.random() * 2) + 's';
+        document.body.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 4000);
+      }
+    </script>
+    {% endif %}
+  </div>
+</body>
+</html>
