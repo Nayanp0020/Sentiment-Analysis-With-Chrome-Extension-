@@ -17,8 +17,13 @@ A full-stack AI project that integrates a Chrome Extension with a Django-based M
 
   ## 📸 Output Screenshots
 
+### 🔹 Main Dashboard
+![Selection](images/frontend.png)
+
 ### 🔹 Text Selection
 ![Selection](images/selection.png)
 
 ### 🔹 Sentiment Popup
 ![Popup](images/Popup.png)
+
+
