@@ -21,4 +21,4 @@ A full-stack AI project that integrates a Chrome Extension with a Django-based M
 ![Selection](images/selection.png)
 
 ### 🔹 Sentiment Popup
-![Popup](images/popup.png)
+![Popup](images/Popup.png)
